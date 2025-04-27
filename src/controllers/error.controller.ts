@@ -1,8 +1,8 @@
-import { errorHandler } from '../utils/error.handler.js'
-import { Response, } from 'express'
+import { errorHandler } from '../utils/error.handler'
+import { Response } from 'express'
 errorHandler.default
 
-let errController = (error: any, res: Response ) => {
+let errController = (error: any, res: Response) => {
 	res.status(404).json({ status: 'Failed', message: error.message })
 }
 

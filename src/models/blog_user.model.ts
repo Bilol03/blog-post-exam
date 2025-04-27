@@ -1,17 +1,27 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes } from 'sequelize'
 import { sequelize } from '../config/db.config'
 
-export class BlogUser extends Model {}
-
-BlogUser.init(
+const BlogUser = sequelize.define(
+	'BlogUser',
 	{
-		id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-		user_id: { type: DataTypes.BIGINT, allowNull: false },
-		blog_id: { type: DataTypes.BIGINT, allowNull: false },
-		role: {
-			type: DataTypes.ENUM('owner', 'editor', 'member'),
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			primaryKey: true,
+		},
+		user_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
+		blog_id: {
+			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
 	},
-	{ sequelize, modelName: 'blogs_users' },
+	{
+		tableName: 'bloguser',
+		timestamps: true,
+	},
 )
+
+export { BlogUser }

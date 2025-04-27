@@ -1,12 +1,23 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes } from 'sequelize'
 import { sequelize } from '../config/db.config'
 
-export class Blog extends Model {}
-
-Blog.init(
+const Blog = sequelize.define(
+	'Blog',
 	{
-		id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-		blog_name: { type: DataTypes.STRING, allowNull: false },
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			primaryKey: true,
+		},
+		title: {
+			type: DataTypes.STRING(255),
+			allowNull: false,
+		},
 	},
-	{ sequelize, modelName: 'blog' },
+	{
+		tableName: 'blogs',
+		timestamps: true,
+	},
 )
+
+export { Blog }

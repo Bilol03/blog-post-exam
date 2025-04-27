@@ -1,14 +1,31 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes } from 'sequelize'
 import { sequelize } from '../config/db.config'
 
-export class Comment extends Model {}
-
-Comment.init(
+const Comment = sequelize.define(
+	'Comments',
 	{
-		id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-		comment: { type: DataTypes.STRING, allowNull: false },
-		user_id: { type: DataTypes.BIGINT, allowNull: false },
-		post_id: { type: DataTypes.BIGINT, allowNull: false },
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			allowNull: false,
+		},
+		comment: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		user_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
+		post_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
 	},
-	{ sequelize, modelName: 'comment' },
+	{
+		tableName: 'comments',
+		timestamps: true,
+	},
 )
+
+export { Comment }
