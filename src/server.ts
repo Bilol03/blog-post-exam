@@ -1,4 +1,5 @@
 import express from 'express'
+import { Response } from 'express'
 import { config } from 'dotenv'
 
 config()
@@ -8,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 
-app.use((err, req, res, next) => {
+app.use((err: any, res: Response) => {
 	const status = err.status || 500
 	console.log(status)
 
@@ -19,7 +20,7 @@ app.use((err, req, res, next) => {
 		},
 	})
 })
-process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', (err: any) => {
 	console.log('UNHANDLED REJECTION 💥')
 
 	console.log(err.name, err.message)

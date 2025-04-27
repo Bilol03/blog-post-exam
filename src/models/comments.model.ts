@@ -1,15 +1,14 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../config/db.config'
 
-export class Post extends Model {}
+export class Comment extends Model {}
 
-Post.init(
+Comment.init(
 	{
 		id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-		title: { type: DataTypes.STRING, allowNull: false },
-		body: { type: DataTypes.TEXT },
-		blog_id: { type: DataTypes.BIGINT, allowNull: false },
+		comment: { type: DataTypes.STRING, allowNull: false },
 		user_id: { type: DataTypes.BIGINT, allowNull: false },
+		post_id: { type: DataTypes.BIGINT, allowNull: false },
 	},
-	{ sequelize, modelName: 'post' },
+	{ sequelize, modelName: 'comment' },
 )

@@ -1,6 +1,7 @@
-let errorHandler = (func) => {
-    return (req, res, next) => {
-        func(req, res, next).catch((err) => {
+import { Request, Response, NextFunction } from "express"
+let errorHandler = (func: any): any => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        func(req, res, next).catch((err: any): void => {
             console.log(err)
             res.status(400).json({message: "Error: " + err.message})
         })
@@ -8,9 +9,9 @@ let errorHandler = (func) => {
 }
 
 
-let authErrorHandler = (func) => {
-	return (req, res, next) => {
-		func(req, res, next).catch((err) => {
+let authErrorHandler = (func: any): any => {
+	return (req: Request, res: Response, next: NextFunction) => {
+		func(req, res, next).catch((err: any): void => {
 			console.log(err)
             res.status(401).json({message: "Error: " + err.message})
 		})
