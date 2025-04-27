@@ -1,22 +1,23 @@
 import { errController } from './controllers/error.controller'
-import authRouter from "./routes/auth.routes"
 import { sequelize } from './config/db.config'
-import { Response } from 'express'
+import authRouter from './routes/auth.routes'
+import express, { Response } from 'express'
+import cookieParser from 'cookie-parser'
 import { config } from 'dotenv'
-import express from 'express'
 
 config()
 let app = express()
 
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 ;(async () => {
 	await sequelize.sync()
 	console.log('Connected to DB*')
 })()
 
-app.use("/auth", authRouter)
+app.use('/auth', authRouter)
 
 app.use(errController)
 app.use((err: any, res: Response) => {
