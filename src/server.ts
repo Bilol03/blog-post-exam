@@ -1,6 +1,7 @@
 import express from 'express'
 import { Response } from 'express'
 import { config } from 'dotenv'
+import { errController } from './controllers/error.controller'
 
 config()
 let app = express()
@@ -8,7 +9,7 @@ let app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
-
+app.use(errController)
 app.use((err: any, res: Response) => {
 	const status = err.status || 500
 	console.log(status)
