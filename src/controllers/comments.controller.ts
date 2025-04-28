@@ -38,7 +38,20 @@ let updateComment = errorHandler( async (req: Request, res: Response) => {
     res.status(200).json({message: "Success", comment: comment});
  
 })
-let deleteComment = errorHandler( async (req: Request, res: Response) => {})
+let deleteComment = errorHandler( async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const comment: any = await Comment.findByPk(id);
+    if(comment.user_id != req.user.id) throw new Error("You are not able to update")
+
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    await comment.destroy();
+
+    res.status(200).json({ message: 'Comment deleted successfully' });
+})
 
 export default {
     createComment,
