@@ -35,8 +35,18 @@ let updateUser = errorHandler(async (req: Request, res: Response) => {
 	}
 })
 
+let deleteUser = errorHandler(async (req: Request, res: Response) => {
+	let id = req.params.id
+    if(req.user.id != id) throw new Error("You are not able to delete")
+
+	let data = await User.destroy({ where: { id } })
+    if(!data) throw new Error("This user is already deleted")
+    res.status(200).json({message: "Successfully deleted"})
+})
+
 export default {
 	getUsers,
 	getById,
 	updateUser,
+    deleteUser,
 }
