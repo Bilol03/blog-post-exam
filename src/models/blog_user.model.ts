@@ -17,17 +17,20 @@ const BlogUser = sequelize.define(
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
-        isDeleted: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
-        }
+		role: {
+			type: DataTypes.ENUM('owner', 'user'),
+			allowNull: false,
+		},
+		isDeleted: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false,
+		},
 	},
 	{
 		tableName: 'bloguser',
 		timestamps: true,
 	},
 )
-
 
 export { BlogUser }

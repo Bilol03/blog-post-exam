@@ -1,3 +1,4 @@
+import { error } from 'console'
 import { errorHandler } from '../utils/error.handler'
 import { Request, Response, NextFunction } from 'express'
 import Joi from 'joi'

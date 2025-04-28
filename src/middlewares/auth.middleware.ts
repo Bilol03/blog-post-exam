@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import { User } from '../models/users.model'
 import { errorHandler } from '../utils/error.handler'
 
+
 let checkToken = errorHandler(
 	async (req: Request, res: Response, next: NextFunction) => {
 		let token = req.cookies.token
