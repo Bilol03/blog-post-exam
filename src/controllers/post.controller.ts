@@ -55,15 +55,11 @@ let deletePost = errorHandler(async (req: Request, res: Response) => {
     
 })
 let sortPost = errorHandler(async (req: Request, res: Response) => {
-    // const { blog_id } = req.query;
 
-    // if (!blog_id) {
-    //   return res.status(400).json({ message: 'blog_id is required' });
-    // }
 
     const posts = await Post.findAll({
-      where: {  isDeleted: false }, // faqat o'chirilmaganlarni olamiz
-      order: [['createdAt', 'DESC']],        // eng oxirgilari birinchi bo'ladi
+      where: {  isDeleted: false }, 
+      order: [['createdAt', 'DESC']],  
       include: [
         { model: User, as: 'user', attributes: ['id', 'name'] },
       ],
