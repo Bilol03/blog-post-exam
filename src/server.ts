@@ -4,6 +4,7 @@ import userRouter from "./routes/users.routes"
 import authRouter from './routes/auth.routes'
 import express, { Response } from 'express'
 import cookieParser from 'cookie-parser'
+import "./models/relationships.model"
 import { config } from 'dotenv'
 
 config()

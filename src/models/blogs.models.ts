@@ -13,6 +13,11 @@ const Blog = sequelize.define(
 			type: DataTypes.STRING(255),
 			allowNull: false,
 		},
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
 	},
 	{
 		tableName: 'blogs',

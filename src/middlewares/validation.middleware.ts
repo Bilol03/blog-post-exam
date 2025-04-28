@@ -8,7 +8,7 @@ let userValidator = errorHandler(async (req: Request, res: Response, next: NextF
 			'string.base': 'Name must be a string',
 			'any.required': 'Name is required',
 		}),
-		last_name: Joi.string().optional().messages({
+		lastname: Joi.string().optional().messages({
 			'string.base': 'Last name must be a string',
 		}),
 		email: Joi.string().email().required().messages({

@@ -7,6 +7,7 @@ const Post = sequelize.define(
 		id: {
 			type: DataTypes.INTEGER,
 			autoIncrement: true,
+            primaryKey: true,
 			allowNull: false,
 		},
 		title: {
@@ -17,8 +18,19 @@ const Post = sequelize.define(
 			type: DataTypes.TEXT,
 			allowNull: false,
 		},
-		blog_id: { type: DataTypes.INTEGER, allowNull: false },
-		user_id: { type: DataTypes.INTEGER, allowNull: false },
+		blog_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
+		user_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
+        isDeleted: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false,
+		}
 	},
 	{
 		tableName: 'posts',

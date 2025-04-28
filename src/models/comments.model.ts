@@ -6,6 +6,7 @@ const Comment = sequelize.define(
 	{
 		id: {
 			type: DataTypes.INTEGER,
+            primaryKey: true,
 			autoIncrement: true,
 			allowNull: false,
 		},
@@ -21,6 +22,11 @@ const Comment = sequelize.define(
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
 	},
 	{
 		tableName: 'comments',
