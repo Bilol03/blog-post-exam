@@ -20,6 +20,6 @@ route.get('/get-by-id/:id', postController.getById)
 route.put('/update/:id', checkToken, postController.updatePost)
 route.delete('/delete/:id', checkToken, postController.deletePost)
 route.get('/sort-by-date', checkToken, postController.sortPost)
-route.get('/:post-id/comments', postController.getPostComments)
+route.get('/:postId/comments', postController.getPostComments)
 
 export default route

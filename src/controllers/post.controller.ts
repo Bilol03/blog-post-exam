@@ -3,6 +3,7 @@ import { Post } from '../models/post.models'
 import { errorHandler } from '../utils/error.handler'
 import { Blog } from '../models/blogs.models'
 import { User } from '../models/users.model'
+import { Comment } from '../models/comments.model'
 
 let createPost = errorHandler(async (req: Request, res: Response) => {
 	let body = req.body
@@ -70,7 +71,23 @@ let sortPost = errorHandler(async (req: Request, res: Response) => {
 
     res.status(200).json(posts);
 })
-let getPostComments = errorHandler(async (req: Request, res: Response) => {})
+let getPostComments = errorHandler(async (req: Request, res: Response) => {
+    const { postId } = req.params;
+
+    if (!postId) {
+      return res.status(400).json({ message: 'post_id is required' });
+    }
+
+    const comments = await Comment.findAll({
+      where: { post_id: postId },
+      order: [['createdAt', 'DESC']], 
+      include: [
+        { model: User, as: 'user', attributes: ['id', 'name', 'email'] }
+      ]
+    });
+
+    res.status(200).json(comments);
+})
 
 export default {
 	createPost,
