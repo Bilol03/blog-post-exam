@@ -4,8 +4,6 @@ import { Router } from 'express'
 
 let route = Router()
 /*
-    /create - Blog yaratish
-    /get-my-blogs - Bloglarni olish. O’ziga tegishli bo’lgan
     /get-my-joined-blogs - Bloglarni olish. O’zi a’zo bo’lgan
     /get-blog-info - Idsi bo’yicha blog haqida batafsil ma’lumot.
     /update - Update qilish. Faqat o’zi yaratganini update qilolsin
@@ -19,4 +17,8 @@ let route = Router()
 
 route.post("/create", checkToken, blogController.createBlog)
 route.get('/get-my-blogs', checkToken, blogController.getMyBlogs)
+route.get('/get-my-joined-blogs', checkToken, blogController.getMyJoinedBlogs)
+route.get('/get-blog-info/:id', blogController.getBlogInfo)
+route.get('/update/:id', checkToken, blogController.updateBlog)
+
 export default route
