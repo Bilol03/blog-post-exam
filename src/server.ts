@@ -2,6 +2,7 @@ import { errController } from './controllers/error.controller'
 import { sequelize } from './config/db.config'
 import userRouter from "./routes/users.routes"
 import blogRouter from "./routes/blogs.routes"
+import postRouter from './routes/posts.routes'
 import authRouter from './routes/auth.routes'
 import express, { Response } from 'express'
 import cookieParser from 'cookie-parser'
@@ -23,6 +24,7 @@ app.use(cookieParser())
 app.use('/auth', authRouter)
 app.use(userRouter)
 app.use("/blog", blogRouter)
+app.use("/post", postRouter)
 
 app.use(errController)
 app.use((err: any, res: Response) => {

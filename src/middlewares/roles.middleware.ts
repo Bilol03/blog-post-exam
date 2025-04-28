@@ -7,6 +7,8 @@ let checkRole = errorHandler(async (req: Request, res: Response, next: NextFunct
     let userId = req.user.id
 
     let blogUser:any = await BlogUser.findOne({where: {blog_id: blogId, user_id: userId}})
+    console.log(blogUser.role);
+    
     if (!blogUser) req.user = null
     if(blogUser.role != 'owner') req.user = null
     
