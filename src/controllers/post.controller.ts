@@ -20,8 +20,23 @@ let createPost = errorHandler(async (req: Request, res: Response) => {
 
 
 })
-let getById = errorHandler(async (req: Request, res: Response) => {})
-let updatePost = errorHandler(async (req: Request, res: Response) => {})
+let getById = errorHandler(async (req: Request, res: Response) => {
+   let id = req.params.id
+   
+   let post = await Post.findOne({where: {id}})
+   res.status(200).json({message: "Success", post})
+})
+
+let updatePost = errorHandler(async (req: Request, res: Response) => {
+    let user_id = req.user.id
+    let id = req.params.id
+    let body = req.body
+
+    let [updated] = await Post.update(body, {where: {id, user_id}})
+    if(!updated) throw new Error("Post not updated")
+    let data = await Post.findOne({where: {id}})
+    res.status(200).json({message: "Successfully updated", data})
+})
 let deletePost = errorHandler(async (req: Request, res: Response) => {})
 let sortPost = errorHandler(async (req: Request, res: Response) => {})
 let getPostComments = errorHandler(async (req: Request, res: Response) => {})
