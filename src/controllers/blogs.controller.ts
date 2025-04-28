@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { Op } from 'sequelize'
 import { BlogUser } from '../models/blog_user.model'
 import { Blog } from '../models/blogs.models'
 import { User } from '../models/users.model'
@@ -48,25 +49,48 @@ let getBlogInfo = errorHandler(async (req: Request, res: Response) => {
 })
 
 let updateBlog = errorHandler(async (req: Request, res: Response) => {
-    if(req.user == null) throw new Error("You are unable to update")
-    let [updated] = await Blog.update(req.body, {where: {id: req.params.id}})
-    if(updated) {
-        let blog = await Blog.findOne({where: {id: req.params.id}})
-        res.status(200).json({message: 'Success', blog})
-    }else {
-        throw new Error("Blog not updated")
-    }
+	if (req.user == null) throw new Error('You are unable to update')
+	let [updated] = await Blog.update(req.body, {
+		where: { id: req.params.id },
+	})
+	if (updated) {
+		let blog = await Blog.findOne({ where: { id: req.params.id } })
+		res.status(200).json({ message: 'Success', blog })
+	} else {
+		throw new Error('Blog not updated')
+	}
 })
 
-let deleteBlog = errorHandler(async (req:Request, res: Response) => {
-    if(req.user == null) throw new Error("You are unable to delete")
+let deleteBlog = errorHandler(async (req: Request, res: Response) => {
+	if (req.user == null) throw new Error('You are unable to delete')
 
-    let id = req.params.id
-    await Blog.update({isDeleted: true}, {where: {id}})
+	let id = req.params.id
+	await Blog.update({ isDeleted: true }, { where: { id } })
 
-    res.status(200).json({message: "Successfully deleted"})
+	res.status(200).json({ message: 'Successfully deleted' })
 })
 
+let searchBlog = errorHandler(async (req: Request, res: Response) => {
+	let blog_name = req.query.title
+	const page = Number(req.query.page) || 1
+	const limit = 10
+	const offset = (page - 1) * limit
+
+	console.log(blog_name)
+
+	const blog = await Blog.findAll({
+		where: {
+			title: {
+				[Op.iLike]: blog_name,
+			},
+		},
+		limit,
+		offset,
+	})
+
+	if (!blog) throw new Error('Blog not found')
+	res.status(200).json({ message: 'Success', blog })
+})
 
 export default {
 	createBlog,
@@ -74,5 +98,6 @@ export default {
 	getMyJoinedBlogs,
 	getBlogInfo,
 	updateBlog,
-    deleteBlog
+	deleteBlog,
+	searchBlog,
 }

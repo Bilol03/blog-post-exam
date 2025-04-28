@@ -7,6 +7,7 @@ import { errorHandler } from '../utils/error.handler'
 let checkToken = errorHandler(
 	async (req: Request, res: Response, next: NextFunction) => {
 		let token = req.cookies.token
+        
 
 		if (!token) throw new Error('Token is required')
 		const decoded: any = jwt.verify(token, process.env.SECRET_KEY as string)

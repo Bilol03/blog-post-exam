@@ -22,5 +22,6 @@ route.get('/get-my-joined-blogs', checkToken, blogController.getMyJoinedBlogs)
 route.get('/get-blog-info/:id', blogController.getBlogInfo)
 route.put('/update/:id', checkToken, checkRole, blogController.updateBlog)
 route.delete('/delete/:id', checkToken, checkRole, blogController.deleteBlog)
+route.get("/search", checkToken, blogController.searchBlog)
 
 export default route
