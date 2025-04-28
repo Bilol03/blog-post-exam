@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import { Post } from '../models/post.models'
 import { errorHandler } from '../utils/error.handler'
+import { Blog } from '../models/blogs.models'
+import { User } from '../models/users.model'
 
 let createPost = errorHandler(async (req: Request, res: Response) => {
 	let body = req.body
@@ -52,7 +54,21 @@ let deletePost = errorHandler(async (req: Request, res: Response) => {
     
 })
 let sortPost = errorHandler(async (req: Request, res: Response) => {
-    
+    // const { blog_id } = req.query;
+
+    // if (!blog_id) {
+    //   return res.status(400).json({ message: 'blog_id is required' });
+    // }
+
+    const posts = await Post.findAll({
+      where: {  isDeleted: false }, // faqat o'chirilmaganlarni olamiz
+      order: [['createdAt', 'DESC']],        // eng oxirgilari birinchi bo'ladi
+      include: [
+        { model: User, as: 'user', attributes: ['id', 'name'] },
+      ],
+    });
+
+    res.status(200).json(posts);
 })
 let getPostComments = errorHandler(async (req: Request, res: Response) => {})
 
