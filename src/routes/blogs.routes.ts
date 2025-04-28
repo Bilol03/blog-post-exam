@@ -24,5 +24,7 @@ route.put('/update/:id', checkToken, checkRole, blogController.updateBlog)
 route.delete('/delete/:id', checkToken, checkRole, blogController.deleteBlog)
 route.get("/search", checkToken, blogController.searchBlog)
 route.post("/join-blog/:id", checkToken, blogController.joinBlog)
+route.post("/leave-blog/:id", checkToken, blogController.leaveBlog)
+route.get("/get-users/:id", checkToken, checkRole, blogController.getMembers)
 
 export default route

@@ -93,11 +93,27 @@ let searchBlog = errorHandler(async (req: Request, res: Response) => {
 })
 
 let joinBlog = errorHandler(async (req: Request, res: Response) => {
-    let blog_id = req.params.id
-    let user_id = req.user.id
-    let obj = {blog_id, user_id, role: 'user'}
-    let joining = await BlogUser.create(obj)
-    res.status(200).json({message: "Successfully joined", joining})
+	let obj = { blog_id: req.params.id, user_id: req.user.id, role: 'user' }
+	let mem
+	let joining = await BlogUser.create(obj)
+	res.status(200).json({ message: 'Successfully joined', joining })
+})
+
+let leaveBlog = errorHandler(async (req: Request, res: Response) => {
+	let obj = { blog_id: req.params.id, user_id: req.user.id }
+	let leaving = await BlogUser.destroy({ where: obj })
+	if (leaving == 0) throw new Error('You already left blog')
+	res.status(200).json({ message: 'Successfully left' })
+})
+
+let getMembers = errorHandler(async (req: Request, res: Response) => {
+	let members = await BlogUser.findAll({
+		where: { blog_id: req.params.id },
+		attributes: ['id', 'role'],
+		include: [{ model: User, as: 'user', where: { isDeleted: false } }],
+	})
+
+    res.status(200).json(members)
 })
 
 export default {
@@ -108,5 +124,7 @@ export default {
 	updateBlog,
 	deleteBlog,
 	searchBlog,
-    joinBlog
+	joinBlog,
+	leaveBlog,
+	getMembers,
 }
