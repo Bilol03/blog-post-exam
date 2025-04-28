@@ -4,11 +4,12 @@ import { Post } from './post.models';
 import { Comment } from './comments.model';
 import { BlogUser } from './blog_user.model';
 
-User.belongsToMany(Blog, { through: BlogUser, foreignKey: 'user_id' });
-Blog.belongsToMany(User, { through: BlogUser, foreignKey: 'blog_id' });
 
-User.hasMany(Post, { foreignKey: 'user_id' });
-Post.belongsTo(User, { foreignKey: 'user_id' });
+BlogUser.belongsTo(User, { foreignKey: 'user_id', as: 'user' })
+BlogUser.belongsTo(Blog, { foreignKey: 'blog_id', as: 'blog' })
+
+User.hasMany(BlogUser, { foreignKey: 'user_id' });
+Post.belongsTo(BlogUser, { foreignKey: 'user_id' });
 
 Blog.hasMany(Post, { foreignKey: 'blog_id' });
 Post.belongsTo(Blog, { foreignKey: 'blog_id' });

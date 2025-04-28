@@ -18,5 +18,5 @@ let route = Router()
 */
 
 route.post("/create", checkToken, blogController.createBlog)
-
+route.get('/get-my-blogs', checkToken, blogController.getMyBlogs)
 export default route

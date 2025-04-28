@@ -9,7 +9,8 @@ let getUsers = errorHandler(async (req: Request, res: Response) => {
 
 let getById = errorHandler(async (req: Request, res: Response) => {
 	let id = req.params.id
-	let user = await User.findOne({ where: { id } })
+	let user: any = await User.findOne({ where: { id } })
+    if(user.isDeleted == true) throw new Error("User not found")
 	if (!user) throw new Error('User not found')
 
 	res.status(200).json({ status: 200, message: 'Success', user })
@@ -17,6 +18,9 @@ let getById = errorHandler(async (req: Request, res: Response) => {
 
 let updateUser = errorHandler(async (req: Request, res: Response) => {
 	let id = req.params.id
+    let user: any = await User.findOne({ where: { id } })
+    if(user.isDeleted == true) throw new Error("User not found")
+
 	if (req.user.id != id) throw new Error('You are not able to update')
 	let body = req.body
 	if (body.password) {
