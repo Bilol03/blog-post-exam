@@ -1,6 +1,7 @@
 import { checkToken } from '../middlewares/auth.middleware'
 import blogController from "../controllers/blogs.controller"
 import { Router } from 'express'
+import { checkRole } from '../middlewares/roles.middleware'
 
 let route = Router()
 /*
@@ -19,6 +20,7 @@ route.post("/create", checkToken, blogController.createBlog)
 route.get('/get-my-blogs', checkToken, blogController.getMyBlogs)
 route.get('/get-my-joined-blogs', checkToken, blogController.getMyJoinedBlogs)
 route.get('/get-blog-info/:id', blogController.getBlogInfo)
-route.get('/update/:id', checkToken, blogController.updateBlog)
+route.put('/update/:id', checkToken, checkRole, blogController.updateBlog)
+route.delete('/delete/:id', checkToken, checkRole, blogController.deleteBlog)
 
 export default route
