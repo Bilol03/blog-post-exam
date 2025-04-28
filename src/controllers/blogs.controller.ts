@@ -92,6 +92,14 @@ let searchBlog = errorHandler(async (req: Request, res: Response) => {
 	res.status(200).json({ message: 'Success', blog })
 })
 
+let joinBlog = errorHandler(async (req: Request, res: Response) => {
+    let blog_id = req.params.id
+    let user_id = req.user.id
+    let obj = {blog_id, user_id, role: 'user'}
+    let joining = await BlogUser.create(obj)
+    res.status(200).json({message: "Successfully joined", joining})
+})
+
 export default {
 	createBlog,
 	getMyBlogs,
@@ -100,4 +108,5 @@ export default {
 	updateBlog,
 	deleteBlog,
 	searchBlog,
+    joinBlog
 }
