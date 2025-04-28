@@ -18,7 +18,7 @@ let route = Router()
 route.post('/:id/create', checkToken, checkRole, postController.createPost)
 route.get('/get-by-id/:id', postController.getById)
 route.put('/update/:id', checkToken, postController.updatePost)
-route.delete('/deleted/:id', checkToken, postController.deletePost)
+route.delete('/delete/:id', checkToken, postController.deletePost)
 route.get('/sort-by-date', checkToken, postController.sortPost)
 route.get('/:post-id/comments', postController.getPostComments)
 
